@@ -19,7 +19,6 @@ class CreateUserUseCase {
     this.usersRepository.create({ email, name });
 
     const user = this.usersRepository.findByEmail(email);
-    console.log(user);
     return user;
   }
 }

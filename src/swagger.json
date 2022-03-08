@@ -1,0 +1,332 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Atlas",
+    "dscription": "Essa é uma documentação sobre a Atlas API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Thiago Torres",
+      "email": "thiagomev@gmail.com"
+    }
+  },
+  "paths":{
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Criar um novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "John Doe",
+                  "email": "johndoe@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "id": "ef9208a9-e869-43f7-94a4-a3f7213c0711",
+                    "admin": false,
+                    "name": "John Doe",
+                    "email": "johndoe@example.com",
+                    "created_at": "2022-03-08T13:49:11.360Z",
+                    "updated_at": "2022-03-08T13:49:11.360Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email já esta sendo utilizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Email já esta sendo utilizado."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Listar todos os usuários",
+        "description": "Somente usuários administradores podem listar todos os usuários.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string($uuid)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    },
+                    "example":[
+                      {
+                        "id": "194fa565-30c8-4537-a8dd-2e4bb34a239e",
+                        "admin": true,
+                        "name": "John Doe1",
+                        "email": "jonh1@gmail.com",
+                        "created_at": "2022-03-08T13:27:39.368Z",
+                        "updated_at": "2022-03-08T13:28:04.768Z"
+                      },
+                      {
+                        "id": "7d50f8c2-73e5-4ca2-b338-1b8ef01cd53a",
+                        "admin": false,
+                        "name": "John Doe2",
+                        "email": "jonh2@gmail.com",
+                        "created_at": "2022-03-08T13:28:04.768Z",
+                        "updated_at": "2022-03-08T13:28:04.768Z"
+                      },
+                      {
+                        "id": "cf095c60-65ca-426a-bde4-dfc2cc25490f",
+                        "admin": false,
+                        "name": "John Doe3",
+                        "email": "jonh3@gmail.com",
+                        "created_at": "2022-03-08T13:28:37.618Z",
+                        "updated_at": "2022-03-08T13:28:37.618Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+        "400":{
+          "description": "Usuário não é administrador.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "message": "Usuário não é administrador."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    },
+    "/users/{user_id}":{
+      "get":{
+        "tags": ["Users"],
+        "summary": "Listar um usuário",
+        "description": "Somente usuários administradores podem listar todos os usuários.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string($uuid)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "id": "194fa565-30c8-4537-a8dd-2e4bb34a239e",
+                    "admin": true,
+                    "name": "John Doe1",
+                    "email": "",
+                    "created_at": "2022-03-08T13:27:39.368Z",
+                    "updated_at": "2022-03-08T13:28:04.768Z"
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "Usuário não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Usuário não é encontrado."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin":{
+      "patch":{
+        "tags": ["Users"],
+        "responses":{
+          "200":{
+            "description": "Operação realizado com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "id": "194fa565-30c8-4537-a8dd-2e4bb34a239e",
+                    "admin": true,
+                    "name": "John Doe1",
+                    "email": "",
+                    "created_at": "2022-03-08T13:27:39.368Z",
+                    "updated_at": "2022-03-08T13:28:04.768Z"
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "Usuário não encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Usuário não é encontrado."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
